@@ -4,5 +4,29 @@
   </head>
   <body>
     <canvas id='cnv'></canvas>
+    <script>
+      var seed = Math.random();
+noise.seed(seed);
+var cnv = document.getElementById("cnv");
+var ctx = cnv.getContext("2d");
+ctx.strokeStyle = "rgba(0,0,0,0)";
+for (var i = 0; i < 100; i ++) {
+	for (var e = 0; e < 100; e ++) {
+		var x = noise.perlin3(i/10, e/10, 0.5);
+		var y = noise.perlin3(0.5, i/10, e/10);
+		var z = noise.perlin3(e/10, 0.5, i/10);
+		ctx.fillStyle = "rgb("+Math.abs(x*255)+","+Math.abs(y*255)+","+Math.abs(z*255)+")";
+		var vX = 0x010000 * Math.abs(x*255);
+		var vY = 0x000100 * Math.abs(y*255);
+		var vZ = 0x000001 * Math.abs(z*255);
+		var v = vX + vY + vZ;
+		if (v <= 0xFFFFFF / 8) {
+			ctx.fillStyle = "rgb(0,0,255)";
+		}
+		ctx.fillRect(3*i, 3*e, 3, 3);
+
+	}
+}
+    </script>
   </body>
 </html>
