@@ -16,8 +16,8 @@ var dy = 0;
 
 var gen = function () {
 
-for (var ij = 0; ij < 400; ij ++) {
-	for (var ej = 0; ej < 400; ej ++) {
+for (var ij = 0; ij < 100; ij ++) {
+	for (var ej = 0; ej < 100; ej ++) {
 		var i = ij + dx;
 		var e = ej + dy;
 		var x = noise.perlin3(i/zoom, e/zoom, 0.5);
@@ -57,7 +57,7 @@ for (var ij = 0; ij < 400; ij ++) {
 		
 
 		ctx.fillStyle = "rgb("+r+","+g+","+b+")";
-		ctx.fillRect(3*ij, 3*ej, 3, 3);
+		ctx.fillRect(4*ij, 4*ej, 4, 4);
 
 	}
 }
