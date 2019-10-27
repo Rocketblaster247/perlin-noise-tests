@@ -28,7 +28,7 @@ for (var ij = 0; ij < 100; ij ++) {
 		var vY = 0x000100 * Math.abs(y*255);
 		var vZ = 0x000001 * Math.abs(z*255);
 		var v = vX + vY + vZ;
-		var r = 0, g = 0, b = 0;
+		var r = 0, g = 255, b = 0;
 		if (x < 0 && y > 0.5) {
 			r = 127;
 			g = 127;
