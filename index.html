@@ -3,30 +3,72 @@
     <script src='https://cdn.jsdelivr.net/gh/josephg/noisejs/perlin.js'></script>
   </head>
   <body>
-    <canvas id='cnv'></canvas>
+    <canvas id='cnv' width="400px" height="400px"></canvas>
     <script>
-      var seed = Math.random();
-noise.seed(seed);
+      var zoom = 10;
+var seed = Math.random();
+noise.seed(0.3555492502386779);
 var cnv = document.getElementById("cnv");
 var ctx = cnv.getContext("2d");
 ctx.strokeStyle = "rgba(0,0,0,0)";
-for (var i = 0; i < 100; i ++) {
-	for (var e = 0; e < 100; e ++) {
-		var x = noise.perlin3(i/10, e/10, 0.5);
-		var y = noise.perlin3(0.5, i/10, e/10);
-		var z = noise.perlin3(e/10, 0.5, i/10);
+var dx = 10;
+var dy = 0;
+
+var gen = function () {
+
+for (var ij = 0; ij < 400; ij ++) {
+	for (var ej = 0; ej < 400; ej ++) {
+		var i = ij + dx;
+		var e = ej + dy;
+		var x = noise.perlin3(i/zoom, e/zoom, 0.5);
+		var y = noise.perlin3(0.5, i/zoom, e/zoom);
+		var z = noise.perlin3(e/zoom, 0.5, i/zoom);
 		ctx.fillStyle = "rgb("+Math.abs(x*255)+","+Math.abs(y*255)+","+Math.abs(z*255)+")";
 		var vX = 0x010000 * Math.abs(x*255);
 		var vY = 0x000100 * Math.abs(y*255);
 		var vZ = 0x000001 * Math.abs(z*255);
 		var v = vX + vY + vZ;
-		if (v <= 0xFFFFFF / 8) {
-			ctx.fillStyle = "rgb(0,0,255)";
+		var r = 0, g = 0, b = 0;
+		if (x < 0 && y > 0.5) {
+			r = 127;
+			g = 127;
+			b = 0;
 		}
-		ctx.fillRect(3*i, 3*e, 3, 3);
+		if (x > 0.25 && y < 0) {
+			r = 127;
+			g = 127;
+			b = 127;
+			if (y < -0.25) {
+				r = 255;
+				g = 255;
+				b = 255;
+			}
+		}
+		if (x < -0.25) {
+			r = 0;
+			g = 0;
+			b = 255;
+			if (y < -0.25) {
+				r = 127;
+				g = 127;
+			}
+		}
+
+		
+
+		ctx.fillStyle = "rgb("+r+","+g+","+b+")";
+		ctx.fillRect(3*ij, 3*ej, 3, 3);
 
 	}
 }
+
+dx += 1;
+dy += 0.5;
+
+window.requestAnimationFrame(gen);
+
+}
+gen();
     </script>
   </body>
 </html>
